@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import ConversationList from "./ConversationList";
 import SidebarHeader from "./SidebarHeader";
 
@@ -12,11 +13,28 @@ const Sidebar = ({
   activeConversationId,
   onSelectConversation
 }: SidebarProps) => {
+  const [search, setSearch] = useState("");
+  const [filteredConversations, setFilteredConversations] = useState(conversations);
+
+  useEffect(() => {
+    // Filter conversations based on search
+    const filteredConversations = conversations.filter((conversation) => {
+      return conversation.name.toLowerCase().includes(search.toLowerCase());
+    });
+    setFilteredConversations(filteredConversations);
+  }, [search, conversations]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  }
+
   return (
     <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
-      <SidebarHeader />
+      <SidebarHeader
+        onSearchChange={handleSearch}
+      />
       <ConversationList
-        conversations={conversations}
+        conversations={filteredConversations}
         activeConversationId={activeConversationId}
         onSelectConversation={onSelectConversation}
       />
