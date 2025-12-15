@@ -2,6 +2,9 @@ import { useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { login } from '../../store/slices/authSlice';
 import { LoginFormValues, RegisterFormValues } from './indexModel';
 import { createLoginSchema, createRegisterSchema } from './schemas';
 import { AuthHeader } from './components/AuthHeader';
@@ -15,20 +18,29 @@ import LanguageSwitcher from '../../components/LanguageSwitcher';
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
+  // Redirect to home if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
   // Recreate schemas when language changes to update validation messages
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // useMemo is lightweight - only recreates when language changes (rare event)
   const loginSchema = useMemo(() => createLoginSchema(), [i18n.language]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const registerSchema = useMemo(() => createRegisterSchema(), [i18n.language]);
 
   // Store form values to preserve them when language changes
   const [loginFormValues, setLoginFormValues] = useState<Partial<LoginFormValues>>({});
   const [registerFormValues, setRegisterFormValues] = useState<Partial<RegisterFormValues>>({});
 
-  // Re-create forms when language changes to update resolver
+  // Create forms with current schemas
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
@@ -41,61 +53,98 @@ const LoginPage = () => {
     defaultValues: registerFormValues as RegisterFormValues,
   });
 
-  // Save form values when they change
+  // Only save form values and re-validate when language changes
+  // This is more efficient than watching all form changes
   useEffect(() => {
-    const subscription = loginForm.watch((values) => {
-      setLoginFormValues(values as Partial<LoginFormValues>);
-    });
-    return () => subscription.unsubscribe();
-  }, [loginForm]);
-
-  useEffect(() => {
-    const subscription = registerForm.watch((values) => {
-      setRegisterFormValues(values as Partial<RegisterFormValues>);
-    });
-    return () => subscription.unsubscribe();
-  }, [registerForm]);
-
-  // Re-validate forms when language changes to update error messages
-  // This keeps the errors but updates the messages to the new language
-  useEffect(() => {
-    // Get current values and errors before language change
+    // Get current values and errors
     const currentLoginValues = loginForm.getValues();
     const currentRegisterValues = registerForm.getValues();
-    const currentLoginErrors = loginForm.formState.errors;
-    const currentRegisterErrors = registerForm.formState.errors;
+    const hasLoginErrors = Object.keys(loginForm.formState.errors).length > 0;
+    const hasRegisterErrors = Object.keys(registerForm.formState.errors).length > 0;
 
-    // Save values
-    if (Object.values(currentLoginValues).some(v => v !== '')) {
+    // Save values only if they exist
+    const hasLoginValues = Object.values(currentLoginValues).some(v => v !== '');
+    const hasRegisterValues = Object.values(currentRegisterValues).some(v => v !== '');
+
+    if (hasLoginValues) {
       setLoginFormValues(currentLoginValues);
     }
-    if (Object.values(currentRegisterValues).some(v => v !== '')) {
+    if (hasRegisterValues) {
       setRegisterFormValues(currentRegisterValues);
     }
 
-    // Re-validate with new schema to update error messages
-    // Use setTimeout to ensure schema is updated
-    setTimeout(() => {
-      if (Object.keys(currentLoginErrors).length > 0) {
-        loginForm.trigger();
-      }
-      if (Object.keys(currentRegisterErrors).length > 0) {
-        registerForm.trigger();
-      }
-    }, 0);
+    // Re-validate with new schema to update error messages (keeps errors, updates messages)
+    if (hasLoginErrors) {
+      loginForm.trigger();
+    }
+    if (hasRegisterErrors) {
+      registerForm.trigger();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
 
-  const onLoginSubmit = (data: LoginFormValues) => {
-    // TODO: Call API here
-    console.log('Login submitted:', data);
-    alert(t('loginMessages.loginSuccess'));
+  const onLoginSubmit = async (data: LoginFormValues) => {
+    try {
+      // TODO: Call API here
+      // For now, simulate API call
+      console.log('Login submitted:', data);
+      
+      // Simulate API response
+      const mockToken = `mock_token_${Date.now()}`;
+      const mockUser = {
+        email: data.email,
+        name: data.email.split('@')[0], // Extract name from email
+      };
+
+      // Dispatch login action
+      dispatch(
+        login({
+          token: mockToken,
+          user: mockUser,
+        })
+      );
+
+      // Show success message
+      alert(t('loginMessages.loginSuccess'));
+      
+      // Navigate to home page
+      navigate('/', { replace: true });
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Login failed. Please try again.');
+    }
   };
 
-  const onRegisterSubmit = (data: RegisterFormValues) => {
-    // TODO: Call API here
-    console.log('Register submitted:', data);
-    alert(t('loginMessages.signupSuccess'));
+  const onRegisterSubmit = async (data: RegisterFormValues) => {
+    try {
+      // TODO: Call API here
+      // For now, simulate API call
+      console.log('Register submitted:', data);
+      
+      // Simulate API response
+      const mockToken = `mock_token_${Date.now()}`;
+      const mockUser = {
+        email: data.email,
+        name: data.name,
+      };
+
+      // Dispatch login action (same as login after registration)
+      dispatch(
+        login({
+          token: mockToken,
+          user: mockUser,
+        })
+      );
+
+      // Show success message
+      alert(t('loginMessages.signupSuccess'));
+      
+      // Navigate to home page
+      navigate('/', { replace: true });
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Registration failed. Please try again.');
+    }
   };
 
   const handleSocialLogin = (provider: string) => {

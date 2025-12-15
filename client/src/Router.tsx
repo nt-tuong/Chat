@@ -1,30 +1,51 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import IndexPage from './pages/IndexPage';
 import SliderPage from './pages/SliderPage';
 import ImageSliderPage from './pages/ImageSliderPage';
 import ChatPage from './pages/Chat';
 import LoginPage from './pages/login';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
     path: '/',
-    element: <IndexPage />,
+    element: (
+      <ProtectedRoute>
+        <IndexPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/slider',
-    element: <SliderPage />,
+    element: (
+      <ProtectedRoute>
+        <SliderPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/test-image',
-    element: <ImageSliderPage />,
+    element: (
+      <ProtectedRoute>
+        <ImageSliderPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/chat',
-    element: <ChatPage />,
+    element: (
+      <ProtectedRoute>
+        <ChatPage />
+      </ProtectedRoute>
+    ),
   },
   {
-    path: '/login',
-    element: <LoginPage />,
+    path: '*',
+    element: <Navigate to="/" replace />,
   },
 ]);
 
