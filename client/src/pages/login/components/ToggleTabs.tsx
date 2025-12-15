@@ -1,4 +1,4 @@
-import { LOGIN_MESSAGES } from '../../../constants/messages';
+import { useTranslation } from 'react-i18next';
 
 interface ToggleTabsProps {
   isLogin: boolean;
@@ -7,6 +7,8 @@ interface ToggleTabsProps {
 }
 
 export const ToggleTabs = ({ isLogin, onToggleLogin, onToggleRegister }: ToggleTabsProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex mb-6 bg-gray-100 rounded-lg p-1">
       <button
@@ -18,7 +20,7 @@ export const ToggleTabs = ({ isLogin, onToggleLogin, onToggleRegister }: ToggleT
             : 'text-gray-600 hover:text-gray-800'
         }`}
       >
-        {LOGIN_MESSAGES.LOGIN}
+        {t('login')}
       </button>
       <button
         type="button"
@@ -29,9 +31,8 @@ export const ToggleTabs = ({ isLogin, onToggleLogin, onToggleRegister }: ToggleT
             : 'text-gray-600 hover:text-gray-800'
         }`}
       >
-        Đăng ký
+        {t('loginMessages.signupNow')}
       </button>
     </div>
   );
 };
-

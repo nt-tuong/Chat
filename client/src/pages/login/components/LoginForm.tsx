@@ -1,8 +1,8 @@
 import { UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { LoginFormValues } from '../indexModel';
 import { EmailField } from './fields/EmailField';
 import { PasswordField } from './fields/PasswordField';
-import { LOGIN_MESSAGES } from '../../../constants/messages';
 
 interface LoginFormProps {
   form: UseFormReturn<LoginFormValues>;
@@ -17,6 +17,7 @@ export const LoginForm = ({
   onTogglePassword,
   onSubmit,
 }: LoginFormProps) => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -41,13 +42,15 @@ export const LoginForm = ({
             type="checkbox"
             className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
-          <span className="ml-2 text-sm text-gray-600">{LOGIN_MESSAGES.REMEMBER_ME}</span>
+          <span className="ml-2 text-sm text-gray-600">
+            {t('loginMessages.rememberMe')}
+          </span>
         </label>
         <button
           type="button"
           className="text-sm text-blue-600 hover:text-blue-700 font-medium"
         >
-          {LOGIN_MESSAGES.FORGOT_PASSWORD}
+          {t('loginMessages.forgotPassword')}
         </button>
       </div>
 
@@ -56,9 +59,8 @@ export const LoginForm = ({
         type="submit"
         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors duration-200"
       >
-        {LOGIN_MESSAGES.LOGIN}
+        {t('login')}
       </button>
     </form>
   );
 };
-

@@ -1,4 +1,5 @@
 import { UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { RegisterFormValues } from '../indexModel';
 import { NameField } from './fields/NameField';
 import { EmailField } from './fields/EmailField';
@@ -18,6 +19,7 @@ export const RegisterForm = ({
   onTogglePassword,
   onSubmit,
 }: RegisterFormProps) => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -48,9 +50,8 @@ export const RegisterForm = ({
         type="submit"
         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors duration-200"
       >
-        Đăng ký
+        {t('loginMessages.signupNow')}
       </button>
     </form>
   );
 };
-

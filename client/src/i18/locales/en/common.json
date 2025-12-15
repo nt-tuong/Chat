@@ -1,0 +1,45 @@
+{
+  "hello": "Hello",
+  "login": "Login",
+  "logout": "Logout",
+  "loginMessages": {
+    "welcomeBack": "Welcome back!",
+    "createAccount": "Create new account",
+    "loginSuccess": "Login successful!",
+    "signupSuccess": "Registration successful!",
+    "noAccount": "Don't have an account? ",
+    "hasAccount": "Already have an account? ",
+    "signupNow": "Sign up now",
+    "forgotPassword": "Forgot password?",
+    "rememberMe": "Remember me",
+    "or": "Or",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithFacebook": "Continue with Facebook",
+    "termsText": "By registering, you agree to",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "and": "and"
+  },
+  "formLabels": {
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+  "formPlaceholders": {
+    "fullName": "John Doe",
+    "email": "example@email.com",
+    "password": "••••••••"
+  },
+  "validationMessages": {
+    "nameRequired": "Please enter your name",
+    "emailRequired": "Please enter email",
+    "emailInvalid": "Invalid email",
+    "passwordRequired": "Please enter password",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "confirmPasswordMismatch": "Passwords do not match"
+  },
+  "socialLogin": {
+    "loginWith": "Login with {{provider}}"
+  }
+}

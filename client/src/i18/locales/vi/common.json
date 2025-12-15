@@ -1,0 +1,45 @@
+{
+  "hello": "Xin chào",
+  "login": "Đăng nhập",
+  "logout": "Đăng xuất",
+  "loginMessages": {
+    "welcomeBack": "Chào mừng bạn trở lại!",
+    "createAccount": "Tạo tài khoản mới",
+    "loginSuccess": "Đăng nhập thành công!",
+    "signupSuccess": "Đăng ký thành công!",
+    "noAccount": "Chưa có tài khoản? ",
+    "hasAccount": "Đã có tài khoản? ",
+    "signupNow": "Đăng ký ngay",
+    "forgotPassword": "Quên mật khẩu?",
+    "rememberMe": "Ghi nhớ đăng nhập",
+    "or": "Hoặc",
+    "continueWithGoogle": "Tiếp tục với Google",
+    "continueWithFacebook": "Tiếp tục với Facebook",
+    "termsText": "Bằng cách đăng ký, bạn đồng ý với",
+    "termsOfService": "Điều khoản dịch vụ",
+    "privacyPolicy": "Chính sách bảo mật",
+    "and": "và"
+  },
+  "formLabels": {
+    "fullName": "Họ và tên",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu"
+  },
+  "formPlaceholders": {
+    "fullName": "Nguyễn Văn A",
+    "email": "example@email.com",
+    "password": "••••••••"
+  },
+  "validationMessages": {
+    "nameRequired": "Vui lòng nhập tên của bạn",
+    "emailRequired": "Vui lòng nhập email",
+    "emailInvalid": "Email không hợp lệ",
+    "passwordRequired": "Vui lòng nhập mật khẩu",
+    "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+    "confirmPasswordMismatch": "Mật khẩu không khớp"
+  },
+  "socialLogin": {
+    "loginWith": "Đăng nhập với {{provider}}"
+  }
+}
