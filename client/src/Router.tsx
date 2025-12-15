@@ -4,44 +4,33 @@ import SliderPage from './pages/SliderPage';
 import ImageSliderPage from './pages/ImageSliderPage';
 import ChatPage from './pages/Chat';
 import LoginPage from './pages/login';
-import { ProtectedRoute } from './components/ProtectedRoute';
+import { requireAuth, requireGuest } from './utils/authLoader';
 
 export const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+    loader: requireGuest, // Redirect to home if already logged in
   },
   {
     path: '/',
-    element: (
-      <ProtectedRoute>
-        <IndexPage />
-      </ProtectedRoute>
-    ),
+    element: <IndexPage />,
+    loader: requireAuth, // Redirect to login if not authenticated
   },
   {
     path: '/slider',
-    element: (
-      <ProtectedRoute>
-        <SliderPage />
-      </ProtectedRoute>
-    ),
+    element: <SliderPage />,
+    loader: requireAuth,
   },
   {
     path: '/test-image',
-    element: (
-      <ProtectedRoute>
-        <ImageSliderPage />
-      </ProtectedRoute>
-    ),
+    element: <ImageSliderPage />,
+    loader: requireAuth,
   },
   {
     path: '/chat',
-    element: (
-      <ProtectedRoute>
-        <ChatPage />
-      </ProtectedRoute>
-    ),
+    element: <ChatPage />,
+    loader: requireAuth,
   },
   {
     path: '*',
