@@ -1,0 +1,731 @@
+.christmas-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f5e6d3 0%, #e8d5c4 50%, #d4c4b0 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Subtle swirl pattern in background */
+.christmas-container::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(200, 180, 160, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* Confetti dots */
+.confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.confetti-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: confetti-float 4s ease-in-out infinite;
+}
+
+@keyframes confetti-float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Snowflakes - lighter for beige background */
+.snow-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  animation: fall linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0.2;
+  }
+}
+
+/* Stars - removed for cleaner look */
+.stars {
+  display: none;
+}
+
+/* Moon - removed for cleaner look */
+.moon {
+  display: none;
+}
+
+/* Tree Container */
+.tree-container {
+  position: relative;
+  z-index: 2;
+  margin-top: 2rem;
+  filter: drop-shadow(0 0 30px rgba(0, 255, 0, 0.3));
+}
+
+/* String Lights around tree */
+.string-lights {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 600px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.string-light {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  animation: string-blink 1.2s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+.string-light:nth-child(odd) {
+  background: #ff0000;
+  box-shadow: 0 0 15px #ff0000, 0 0 25px #ff0000, 0 0 35px #ff0000;
+}
+
+.string-light:nth-child(even) {
+  background: #00ff00;
+  box-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00, 0 0 35px #00ff00;
+}
+
+.string-light:nth-child(3n) {
+  background: #ffff00;
+  box-shadow: 0 0 15px #ffff00, 0 0 25px #ffff00, 0 0 35px #ffff00;
+}
+
+.string-light:nth-child(4n) {
+  background: #ff00ff;
+  box-shadow: 0 0 15px #ff00ff, 0 0 25px #ff00ff, 0 0 35px #ff00ff;
+}
+
+.string-light:nth-child(5n) {
+  background: #00ffff;
+  box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff, 0 0 35px #00ffff;
+}
+
+/* Position string lights in a spiral around tree */
+.string-light:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg) translateX(220px) translateY(-280px);
+}
+
+.string-light:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(15deg) translateX(210px) translateY(-260px);
+}
+
+.string-light:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(30deg) translateX(200px) translateY(-240px);
+}
+
+.string-light:nth-child(4) {
+  transform: translate(-50%, -50%) rotate(45deg) translateX(190px) translateY(-220px);
+}
+
+.string-light:nth-child(5) {
+  transform: translate(-50%, -50%) rotate(60deg) translateX(180px) translateY(-200px);
+}
+
+.string-light:nth-child(6) {
+  transform: translate(-50%, -50%) rotate(75deg) translateX(170px) translateY(-180px);
+}
+
+.string-light:nth-child(7) {
+  transform: translate(-50%, -50%) rotate(90deg) translateX(160px) translateY(-160px);
+}
+
+.string-light:nth-child(8) {
+  transform: translate(-50%, -50%) rotate(105deg) translateX(150px) translateY(-140px);
+}
+
+.string-light:nth-child(9) {
+  transform: translate(-50%, -50%) rotate(120deg) translateX(140px) translateY(-120px);
+}
+
+.string-light:nth-child(10) {
+  transform: translate(-50%, -50%) rotate(135deg) translateX(130px) translateY(-100px);
+}
+
+.string-light:nth-child(11) {
+  transform: translate(-50%, -50%) rotate(150deg) translateX(120px) translateY(-80px);
+}
+
+.string-light:nth-child(12) {
+  transform: translate(-50%, -50%) rotate(165deg) translateX(110px) translateY(-60px);
+}
+
+.string-light:nth-child(13) {
+  transform: translate(-50%, -50%) rotate(180deg) translateX(100px) translateY(-40px);
+}
+
+.string-light:nth-child(14) {
+  transform: translate(-50%, -50%) rotate(195deg) translateX(90px) translateY(-20px);
+}
+
+.string-light:nth-child(15) {
+  transform: translate(-50%, -50%) rotate(210deg) translateX(80px) translateY(0px);
+}
+
+.string-light:nth-child(16) {
+  transform: translate(-50%, -50%) rotate(225deg) translateX(70px) translateY(20px);
+}
+
+.string-light:nth-child(17) {
+  transform: translate(-50%, -50%) rotate(240deg) translateX(60px) translateY(40px);
+}
+
+.string-light:nth-child(18) {
+  transform: translate(-50%, -50%) rotate(255deg) translateX(50px) translateY(60px);
+}
+
+.string-light:nth-child(19) {
+  transform: translate(-50%, -50%) rotate(270deg) translateX(40px) translateY(80px);
+}
+
+.string-light:nth-child(20) {
+  transform: translate(-50%, -50%) rotate(285deg) translateX(30px) translateY(100px);
+}
+
+.string-light:nth-child(21) {
+  transform: translate(-50%, -50%) rotate(300deg) translateX(20px) translateY(120px);
+}
+
+.string-light:nth-child(22) {
+  transform: translate(-50%, -50%) rotate(315deg) translateX(10px) translateY(140px);
+}
+
+.string-light:nth-child(23) {
+  transform: translate(-50%, -50%) rotate(330deg) translateX(0px) translateY(160px);
+}
+
+.string-light:nth-child(24) {
+  transform: translate(-50%, -50%) rotate(345deg) translateX(-10px) translateY(180px);
+}
+
+@keyframes string-blink {
+  0%, 100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(calc(220px - var(--index, 0) * 10px)) translateY(calc(-280px + var(--index, 0) * 20px)) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(calc(220px - var(--index, 0) * 10px)) translateY(calc(-280px + var(--index, 0) * 20px)) scale(1.2);
+  }
+}
+
+/* Tree Star */
+.tree-star {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3.5rem;
+  filter: drop-shadow(0 0 10px #ffd700);
+  animation: star-spin 3s linear infinite;
+  z-index: 10;
+}
+
+/* Red Bow */
+.red-bow {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  z-index: 9;
+  animation: bow-sway 2s ease-in-out infinite;
+}
+
+@keyframes bow-sway {
+  0%, 100% {
+    transform: translateX(-50%) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(2deg);
+  }
+}
+
+@keyframes star-spin {
+  0% {
+    transform: translateX(-50%) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: translateX(-50%) rotate(360deg) scale(1);
+  }
+}
+
+/* Tree Layers - Darker green like the image */
+.tree-layer {
+  position: relative;
+  margin: 0 auto;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 80px solid #1a5f2e;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.layer-1 {
+  width: 0;
+  height: 0;
+  margin-bottom: -60px;
+  border-left-width: 60px;
+  border-right-width: 60px;
+  border-bottom-width: 100px;
+  border-bottom-color: #1a5f2e;
+}
+
+.layer-2 {
+  width: 0;
+  height: 0;
+  margin-bottom: -60px;
+  border-left-width: 80px;
+  border-right-width: 80px;
+  border-bottom-width: 120px;
+  border-bottom-color: #1a5f2e;
+}
+
+.layer-3 {
+  width: 0;
+  height: 0;
+  margin-bottom: -60px;
+  border-left-width: 100px;
+  border-right-width: 100px;
+  border-bottom-width: 140px;
+  border-bottom-color: #1a5f2e;
+}
+
+.layer-4 {
+  width: 0;
+  height: 0;
+  margin-bottom: -60px;
+  border-left-width: 120px;
+  border-right-width: 120px;
+  border-bottom-width: 160px;
+  border-bottom-color: #1a5f2e;
+}
+
+/* String lights white on tree */
+.string-lights-white {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.string-light-white {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px #ffffff, 0 0 15px #ffffff;
+  animation: white-light-twinkle 1.5s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+/* Position white lights in a zigzag pattern on tree */
+.string-light-white:nth-child(1) { top: 15%; left: 45%; }
+.string-light-white:nth-child(2) { top: 20%; right: 40%; }
+.string-light-white:nth-child(3) { top: 25%; left: 50%; }
+.string-light-white:nth-child(4) { top: 30%; right: 35%; }
+.string-light-white:nth-child(5) { top: 35%; left: 40%; }
+.string-light-white:nth-child(6) { top: 40%; right: 45%; }
+.string-light-white:nth-child(7) { top: 45%; left: 35%; }
+.string-light-white:nth-child(8) { top: 50%; right: 50%; }
+.string-light-white:nth-child(9) { top: 55%; left: 30%; }
+.string-light-white:nth-child(10) { top: 60%; right: 40%; }
+.string-light-white:nth-child(11) { top: 65%; left: 45%; }
+.string-light-white:nth-child(12) { top: 70%; right: 35%; }
+.string-light-white:nth-child(13) { top: 75%; left: 50%; }
+.string-light-white:nth-child(14) { top: 80%; right: 30%; }
+.string-light-white:nth-child(15) { top: 85%; left: 40%; }
+.string-light-white:nth-child(16) { top: 90%; right: 45%; }
+.string-light-white:nth-child(17) { top: 95%; left: 35%; }
+.string-light-white:nth-child(18) { top: 100%; right: 50%; }
+.string-light-white:nth-child(19) { top: 105%; left: 30%; }
+.string-light-white:nth-child(20) { top: 110%; right: 40%; }
+
+@keyframes white-light-twinkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+}
+
+/* Ornaments */
+.ornament {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  animation: bounce 2s ease-in-out infinite;
+  z-index: 4;
+}
+
+.ornament.solid.red {
+  background: #ff0000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 20%;
+  left: 30%;
+  animation-delay: 0s;
+}
+
+.ornament.solid.blue {
+  background: #0066cc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 30%;
+  right: 25%;
+  animation-delay: 0.5s;
+}
+
+.ornament.solid.yellow {
+  background: #ffcc00;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 40%;
+  left: 20%;
+  animation-delay: 1s;
+}
+
+/* Patterned ornaments */
+.ornament.yellow-pattern {
+  background: #ffcc00;
+  background-image: 
+    repeating-linear-gradient(45deg, #ffcc00 0px, #ffcc00 3px, #ff8800 3px, #ff8800 6px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 25%;
+  right: 30%;
+  animation-delay: 0.3s;
+}
+
+.ornament.blue-pattern {
+  background: #0066cc;
+  background-image: 
+    repeating-linear-gradient(45deg, #0066cc 0px, #0066cc 3px, #ff0000 3px, #ff0000 6px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 45%;
+  left: 25%;
+  animation-delay: 0.7s;
+}
+
+.ornament.blue-pattern-striped {
+  background: #0066cc;
+  background-image: 
+    repeating-linear-gradient(0deg, #0066cc 0px, #0066cc 2px, #ff0000 2px, #ff0000 4px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 35%;
+  left: 15%;
+  animation-delay: 1.2s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Lights */
+.light {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+.light-1 {
+  background: #ff0000;
+  top: 15%;
+  left: 40%;
+  animation-delay: 0s;
+}
+
+.light-2 {
+  background: #00ff00;
+  top: 25%;
+  right: 35%;
+  animation-delay: 0.3s;
+}
+
+.light-3 {
+  background: #ffff00;
+  top: 35%;
+  left: 25%;
+  animation-delay: 0.6s;
+}
+
+.light-4 {
+  background: #ff00ff;
+  top: 45%;
+  right: 20%;
+  animation-delay: 0.9s;
+}
+
+.light-5 {
+  background: #00ffff;
+  top: 50%;
+  left: 45%;
+  animation-delay: 1.2s;
+}
+
+.light-6 {
+  background: #ff8800;
+  top: 55%;
+  left: 15%;
+  animation-delay: 1.5s;
+}
+
+.light-7 {
+  background: #8800ff;
+  top: 60%;
+  right: 25%;
+  animation-delay: 1.8s;
+}
+
+.light-8 {
+  background: #ff0088;
+  top: 65%;
+  left: 55%;
+  animation-delay: 2.1s;
+}
+
+.light-9 {
+  background: #00ff88;
+  top: 70%;
+  left: 30%;
+  animation-delay: 2.4s;
+}
+
+.light-10 {
+  background: #ffaa00;
+  top: 75%;
+  right: 40%;
+  animation-delay: 2.7s;
+}
+
+.light-11 {
+  background: #ff0088;
+  top: 20%;
+  left: 50%;
+  animation-delay: 3s;
+}
+
+.light-12 {
+  background: #00ff88;
+  top: 40%;
+  left: 15%;
+  animation-delay: 3.3s;
+}
+
+.light-13 {
+  background: #88ff00;
+  top: 50%;
+  right: 15%;
+  animation-delay: 3.6s;
+}
+
+.light-14 {
+  background: #ff8800;
+  top: 60%;
+  left: 50%;
+  animation-delay: 3.9s;
+}
+
+.light-15 {
+  background: #0088ff;
+  top: 70%;
+  left: 25%;
+  animation-delay: 4.2s;
+}
+
+.light-16 {
+  background: #ff00aa;
+  top: 80%;
+  right: 30%;
+  animation-delay: 4.5s;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  50% {
+    opacity: 0.3;
+    box-shadow: 0 0 5px currentColor;
+  }
+}
+
+/* Tree Trunk */
+.tree-trunk {
+  width: 50px;
+  height: 80px;
+  background: linear-gradient(to bottom, #5d4037, #3e2723);
+  margin: 0 auto;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Presents */
+.presents {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  animation: present-bounce 2s ease-in-out infinite;
+}
+
+.present {
+  font-size: 2.5rem;
+  animation: present-rotate 3s ease-in-out infinite;
+}
+
+.present-1 {
+  animation-delay: 0s;
+}
+
+.present-2 {
+  animation-delay: 0.5s;
+}
+
+.present-3 {
+  animation-delay: 1s;
+}
+
+@keyframes present-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes present-rotate {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Greeting */
+.greeting {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 3;
+  animation: greeting-fade 3s ease-in-out infinite;
+}
+
+.greeting-title {
+  font-size: 3rem;
+  color: #8b4513;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+}
+
+.greeting-subtitle {
+  font-size: 1.5rem;
+  color: #5d4037;
+  margin-top: 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes greeting-fade {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .greeting-title {
+    font-size: 2rem;
+  }
+  
+  .greeting-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .tree-star {
+    font-size: 2rem;
+    top: -30px;
+  }
+  
+  .moon {
+    font-size: 3rem;
+  }
+}
+

@@ -4,6 +4,7 @@ import SliderPage from './pages/SliderPage';
 import ImageSliderPage from './pages/ImageSliderPage';
 import ChatPage from './pages/Chat';
 import LoginPage from './pages/login';
+import ChristmasTree from './pages/ChristmasTree';
 import { requireAuth, requireGuest } from './utils/authLoader';
 
 export const router = createBrowserRouter([
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
     path: '/chat',
     element: <ChatPage />,
     loader: requireAuth,
+  },
+  {
+    path: '/christmas',
+    element: <ChristmasTree />,
   },
   {
     path: '*',

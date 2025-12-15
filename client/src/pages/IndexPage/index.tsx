@@ -41,6 +41,12 @@ const IndexPage: React.FC = () => {
           >
             Test Login
           </button>
+          <button 
+            onClick={() => navigate('/christmas')} 
+            className="nav-link"
+          >
+            Test Christmas Tree
+          </button>
         </div>
       </div>
     </div>
