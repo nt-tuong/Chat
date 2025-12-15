@@ -12,6 +12,9 @@ interface AuthState {
 // Load token from localStorage on initialization
 const getInitialToken = (): string | null => {
   try {
+    // Implement your logic to get the token from the server
+    //  For now, we will use localStorage
+    //   and future logic to use sessionStorage
     return localStorage.getItem('token');
   } catch (error) {
     console.error('Error reading from localStorage:', error);
@@ -20,7 +23,7 @@ const getInitialToken = (): string | null => {
 };
 
 const initialState: AuthState = {
-  isAuthenticated: !!getInitialToken(),
+  isAuthenticated: !!getInitialToken(), // !! is used to convert the result to a boolean
   token: getInitialToken(),
   user: null,
 };
