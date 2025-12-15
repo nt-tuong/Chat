@@ -34,6 +34,13 @@ const IndexPage: React.FC = () => {
           >
             Test Slider (New Version)
           </button>
+          
+          <button 
+            onClick={() => navigate('/login')} 
+            className="nav-link"
+          >
+            Test Login
+          </button>
         </div>
       </div>
     </div>

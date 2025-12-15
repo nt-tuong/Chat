@@ -24,20 +24,65 @@ const LoginPage = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const registerSchema = useMemo(() => createRegisterSchema(), [i18n.language]);
 
+  // Store form values to preserve them when language changes
+  const [loginFormValues, setLoginFormValues] = useState<Partial<LoginFormValues>>({});
+  const [registerFormValues, setRegisterFormValues] = useState<Partial<RegisterFormValues>>({});
+
+  // Re-create forms when language changes to update resolver
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
+    defaultValues: loginFormValues as LoginFormValues,
   });
 
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     mode: 'onChange',
+    defaultValues: registerFormValues as RegisterFormValues,
   });
 
-  // Update resolver when language changes
+  // Save form values when they change
   useEffect(() => {
-    loginForm.clearErrors();
-    registerForm.clearErrors();
+    const subscription = loginForm.watch((values) => {
+      setLoginFormValues(values as Partial<LoginFormValues>);
+    });
+    return () => subscription.unsubscribe();
+  }, [loginForm]);
+
+  useEffect(() => {
+    const subscription = registerForm.watch((values) => {
+      setRegisterFormValues(values as Partial<RegisterFormValues>);
+    });
+    return () => subscription.unsubscribe();
+  }, [registerForm]);
+
+  // Re-validate forms when language changes to update error messages
+  // This keeps the errors but updates the messages to the new language
+  useEffect(() => {
+    // Get current values and errors before language change
+    const currentLoginValues = loginForm.getValues();
+    const currentRegisterValues = registerForm.getValues();
+    const currentLoginErrors = loginForm.formState.errors;
+    const currentRegisterErrors = registerForm.formState.errors;
+
+    // Save values
+    if (Object.values(currentLoginValues).some(v => v !== '')) {
+      setLoginFormValues(currentLoginValues);
+    }
+    if (Object.values(currentRegisterValues).some(v => v !== '')) {
+      setRegisterFormValues(currentRegisterValues);
+    }
+
+    // Re-validate with new schema to update error messages
+    // Use setTimeout to ensure schema is updated
+    setTimeout(() => {
+      if (Object.keys(currentLoginErrors).length > 0) {
+        loginForm.trigger();
+      }
+      if (Object.keys(currentRegisterErrors).length > 0) {
+        registerForm.trigger();
+      }
+    }, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
 
@@ -110,6 +155,7 @@ const LoginPage = () => {
           {/* Form */}
           {isLogin ? (
             <LoginForm
+              key={`login-${i18n.language}`}
               form={loginForm}
               showPassword={showPassword}
               onTogglePassword={togglePassword}
@@ -117,6 +163,7 @@ const LoginPage = () => {
             />
           ) : (
             <RegisterForm
+              key={`register-${i18n.language}`}
               form={registerForm}
               showPassword={showPassword}
               onTogglePassword={togglePassword}
