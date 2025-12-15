@@ -15,6 +15,10 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK" })
 })
 
+app.get('/', (req, res) => {
+  res.send('Hello World from Express!');
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

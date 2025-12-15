@@ -2,7 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import IndexPage from './pages/IndexPage';
 import SliderPage from './pages/SliderPage';
 import ImageSliderPage from './pages/ImageSliderPage';
-import Chat from './pages/Chat';
+import ChatPage from './pages/Chat';
+import LoginPage from './pages/login';
 
 export const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/chat',
-    element: <Chat />,
+    element: <ChatPage />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
   },
 ]);
 
