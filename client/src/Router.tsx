@@ -3,7 +3,7 @@ import IndexPage from './pages/IndexPage';
 import SliderPage from './pages/SliderPage';
 import ImageSliderPage from './pages/ImageSliderPage';
 import ChatPage from './pages/Chat';
-import LoginPage from './pages/login';
+import LoginPage from './pages/LoginPage';
 import ChristmasTree from './pages/ChristmasTree';
 import { requireAuth, requireGuest } from './utils/authLoader';
 

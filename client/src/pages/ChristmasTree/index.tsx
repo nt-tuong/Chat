@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './index.css';
+import { TreeCanvas } from './TreeCanvas';
 
 const ChristmasTree = () => {
   const [snowflakes] = useState(() => Array.from({ length: 50 }, (_, i) => i));
@@ -23,26 +24,6 @@ const ChristmasTree = () => {
         ))}
       </div>
 
-      {/* Stars in background */}
-      <div className="stars">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="star"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 30}%`,
-              animationDelay: `${Math.random() * 2}s`,
-            }}
-          >
-            ✨
-          </div>
-        ))}
-      </div>
-
-      {/* Moon */}
-      <div className="moon">🌙</div>
-
       {/* Confetti dots in background */}
       <div className="confetti">
         {Array.from({ length: 30 }).map((_, i) => (
@@ -59,60 +40,9 @@ const ChristmasTree = () => {
         ))}
       </div>
 
-      {/* Tree */}
+      {/* Tree - Using Canvas */}
       <div className="tree-container">
-        {/* Star on top */}
-        <div className="tree-star">⭐</div>
-
-        {/* Red bow under star */}
-        <div className="red-bow">🎀</div>
-
-        {/* String lights (white) on tree */}
-        <div className="string-lights-white">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div
-              key={i}
-              className="string-light-white"
-              style={{
-                '--index': i,
-                '--delay': `${i * 0.15}s`,
-              } as React.CSSProperties}
-            ></div>
-          ))}
-        </div>
-
-        {/* Tree layers */}
-        <div className="tree-layer layer-1">
-          <div className="ornament red solid"></div>
-          <div className="ornament blue solid"></div>
-          <div className="ornament yellow solid"></div>
-          <div className="ornament yellow-pattern"></div>
-          <div className="ornament blue-pattern"></div>
-        </div>
-        <div className="tree-layer layer-2">
-          <div className="ornament red solid"></div>
-          <div className="ornament blue solid"></div>
-          <div className="ornament yellow solid"></div>
-          <div className="ornament yellow-pattern"></div>
-          <div className="ornament blue-pattern-striped"></div>
-        </div>
-        <div className="tree-layer layer-3">
-          <div className="ornament red solid"></div>
-          <div className="ornament blue solid"></div>
-          <div className="ornament yellow solid"></div>
-          <div className="ornament yellow-pattern"></div>
-          <div className="ornament blue-pattern"></div>
-        </div>
-        <div className="tree-layer layer-4">
-          <div className="ornament red solid"></div>
-          <div className="ornament blue solid"></div>
-          <div className="ornament yellow solid"></div>
-          <div className="ornament yellow-pattern"></div>
-          <div className="ornament blue-pattern"></div>
-        </div>
-
-        {/* Tree trunk */}
-        <div className="tree-trunk"></div>
+        <TreeCanvas width={400} height={600} />
 
         {/* Presents under tree */}
         <div className="presents">
