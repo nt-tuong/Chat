@@ -1,0 +1,134 @@
+-- =====================================================
+-- EXTENSION
+-- =====================================================
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- =====================================================
+-- USERS (ACCOUNT + PERSONAL INFO)
+-- =====================================================
+CREATE TABLE users (
+    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    internal_id BIGSERIAL UNIQUE,
+
+    user_type VARCHAR(30) NOT NULL
+      CHECK (user_type IN ('personal', 'organization_member')),
+
+    username VARCHAR(50) NOT NULL UNIQUE,
+
+    full_name VARCHAR(255) NOT NULL,
+    birth_year INT,
+    gender VARCHAR(20)
+      CHECK (gender IN ('male', 'female', 'other')),
+
+    phone VARCHAR(20),
+    email VARCHAR(255),
+
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    created_uid UUID,
+    updated_at TIMESTAMP NOT NULL DEFAULT now(),
+    updated_uid UUID
+);
+
+CREATE UNIQUE INDEX ux_users_email
+  ON users(email)
+  WHERE email IS NOT NULL;
+
+CREATE UNIQUE INDEX ux_users_phone
+  ON users(phone)
+  WHERE phone IS NOT NULL;
+
+-- =====================================================
+-- AUTH METHODS (LOGIN METHODS)
+-- =====================================================
+CREATE TABLE auth_methods (
+    auth_method_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    internal_id BIGSERIAL UNIQUE,
+
+    user_id UUID NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+
+    auth_type VARCHAR(30) NOT NULL
+      CHECK (auth_type IN ('password', 'phone', 'google', 'facebook')),
+
+    identifier VARCHAR(255) NOT NULL,
+    secret VARCHAR(255),
+    verified BOOLEAN NOT NULL DEFAULT FALSE,
+
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    created_uid UUID,
+    updated_at TIMESTAMP NOT NULL DEFAULT now(),
+    updated_uid UUID,
+
+    UNIQUE (auth_type, identifier)
+);
+
+CREATE INDEX ix_auth_methods_user
+  ON auth_methods(user_id);
+
+-- =====================================================
+-- ORGANIZATIONS
+-- =====================================================
+CREATE TABLE organizations (
+    organization_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    internal_id BIGSERIAL UNIQUE,
+
+    org_code VARCHAR(50) NOT NULL UNIQUE,
+    org_name VARCHAR(255) NOT NULL,
+
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    address TEXT,
+
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    created_uid UUID,
+    updated_at TIMESTAMP NOT NULL DEFAULT now(),
+    updated_uid UUID
+);
+
+CREATE UNIQUE INDEX ux_org_email
+  ON organizations(email)
+  WHERE email IS NOT NULL;
+
+CREATE UNIQUE INDEX ux_org_phone
+  ON organizations(phone)
+  WHERE phone IS NOT NULL;
+
+-- =====================================================
+-- ROLES
+-- =====================================================
+CREATE TABLE roles (
+    role_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    internal_id BIGSERIAL UNIQUE,
+
+    role_code VARCHAR(50) NOT NULL UNIQUE,
+    role_name VARCHAR(100) NOT NULL,
+
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    created_uid UUID,
+    updated_at TIMESTAMP NOT NULL DEFAULT now(),
+    updated_uid UUID
+);
+
+-- =====================================================
+-- MEMBERSHIPS (ACCOUNT VALIDITY / CONTRACT)
+-- =====================================================
+CREATE TABLE memberships (
+    membership_id UUID DEFAULT gen_random_uuid(),
+    internal_id BIGSERIAL UNIQUE,
+
+    user_id UUID NOT NULL REFERENCES users(user_id),
+    organization_id UUID NOT NULL REFERENCES organizations(organization_id),
+    role_id UUID NOT NULL REFERENCES roles(role_id),
+
+    effect_date TIMESTAMP NOT NULL,
+    expire_date TIMESTAMP NOT NULL,
+
+    created_at TIMESTAMP NOT NULL DEFAULT now(),
+    created_uid UUID,
+    updated_at TIMESTAMP NOT NULL DEFAULT now(),
+    updated_uid UUID,
+
+    CONSTRAINT pk_memberships PRIMARY KEY (membership_id, effect_date)
+);
+
+CREATE INDEX ix_memberships_active
+  ON memberships(user_id, organization_id, effect_date, expire_date);
