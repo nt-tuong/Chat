@@ -32,6 +32,23 @@ export const requireGuest = () => {
 };
 
 /**
+ * Loader function for login page
+ * Redirects to home if already authenticated
+ */
+export const requireGuestPromise = () => {
+  const state = store.getState();
+  console.log("requireGuestPromise!!");
+  
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("resolve!!");
+      return resolve(null);
+      
+    }, 5000);
+  });
+};
+
+/**
  * Loader function to protect routes that require authentication
  * Returns null if authenticated, redirects to /login if not
  */

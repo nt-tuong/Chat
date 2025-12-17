@@ -5,13 +5,18 @@ import ImageSliderPage from './pages/ImageSliderPage';
 import ChatPage from './pages/Chat';
 import LoginPage from './pages/LoginPage';
 import ChristmasTree from './pages/ChristmasTree';
-import { requireAuth, requireGuest } from './utils/authLoader';
+import { requireAuth, requireGuest, requireGuestPromise } from './utils/authLoader';
 
 export const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
     loader: requireGuest, // Redirect to home if already logged in
+  },
+  {
+    path: '/login-promise',
+    element: <LoginPage />,
+    loader: requireGuestPromise,
   },
   {
     path: '/',
