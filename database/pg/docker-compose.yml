@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_DB: chat_db
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_PASSWORD: postgres
       TZ: Asia/Ho_Chi_Minh
     ports:
       - "5432:5432"
@@ -20,5 +20,23 @@ services:
       timeout: 5s
       retries: 5
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: nt-tuong98@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
+  pgadmin_data:
