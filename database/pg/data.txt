@@ -8,7 +8,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- =====================================================
 CREATE TABLE users (
     user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    internal_id BIGSERIAL UNIQUE,
+    internalID BIGSERIAL UNIQUE,
 
     user_type VARCHAR(30) NOT NULL
       CHECK (user_type IN ('personal', 'organization_member')),
@@ -17,8 +17,8 @@ CREATE TABLE users (
 
     full_name VARCHAR(255) NOT NULL,
     birth_year INT,
-    gender VARCHAR(20)
-      CHECK (gender IN ('male', 'female', 'other')),
+    gender SMALLINT NOT NULL DEFAULT 0
+      CHECK (gender IN (0, 1, 2)),
 
     phone VARCHAR(20),
     email VARCHAR(255),
@@ -42,7 +42,7 @@ CREATE UNIQUE INDEX ux_users_phone
 -- =====================================================
 CREATE TABLE auth_methods (
     auth_method_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    internal_id BIGSERIAL UNIQUE,
+    internalID BIGSERIAL UNIQUE,
 
     user_id UUID NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
 
@@ -69,7 +69,7 @@ CREATE INDEX ix_auth_methods_user
 -- =====================================================
 CREATE TABLE organizations (
     organization_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    internal_id BIGSERIAL UNIQUE,
+    internalID BIGSERIAL UNIQUE,
 
     org_code VARCHAR(50) NOT NULL UNIQUE,
     org_name VARCHAR(255) NOT NULL,
@@ -97,7 +97,7 @@ CREATE UNIQUE INDEX ux_org_phone
 -- =====================================================
 CREATE TABLE roles (
     role_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    internal_id BIGSERIAL UNIQUE,
+    internalID BIGSERIAL UNIQUE,
 
     role_code VARCHAR(50) NOT NULL UNIQUE,
     role_name VARCHAR(100) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE roles (
 -- =====================================================
 CREATE TABLE memberships (
     membership_id UUID DEFAULT gen_random_uuid(),
-    internal_id BIGSERIAL UNIQUE,
+    internalID BIGSERIAL UNIQUE,
 
     user_id UUID NOT NULL REFERENCES users(user_id),
     organization_id UUID NOT NULL REFERENCES organizations(organization_id),
