@@ -15,6 +15,7 @@ import { SocialLoginButtons } from "./components/SocialLoginButtons";
 import { TermsText } from "./components/TermsText";
 import { Footer } from "./components/Footer";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
+import { useRevalidator } from "react-router-dom";
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
@@ -22,6 +23,7 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const revalidator = useRevalidator();
 
   // Recreate schemas when language changes to update validation messages
   // useMemo is lightweight - only recreates when language changes (rare event)
@@ -90,26 +92,28 @@ const LoginPage = () => {
       // For now, simulate API call
       console.log("Login submitted:", data);
 
-      // Simulate API response
-      const mockToken = `mock_token_${Date.now()}`;
-      const mockUser = {
-        email: data.email,
-        name: data.email.split("@")[0], // Extract name from email
-      };
+      revalidator.revalidate();
 
-      // Dispatch login action
-      dispatch(
-        login({
-          token: mockToken,
-          user: mockUser,
-        })
-      );
+      // // Simulate API response
+      // const mockToken = `mock_token_${Date.now()}`;
+      // const mockUser = {
+      //   email: data.email,
+      //   name: data.email.split("@")[0], // Extract name from email
+      // };
 
-      // Show success message
-      alert(t("loginMessages.loginSuccess"));
+      // // Dispatch login action
+      // dispatch(
+      //   login({
+      //     token: mockToken,
+      //     user: mockUser,
+      //   })
+      // );
 
-      // Navigate to home page
-      navigate("/", { replace: true });
+      // // Show success message
+      // alert(t("loginMessages.loginSuccess"));
+
+      // // Navigate to home page
+      // navigate("/", { replace: true });
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");

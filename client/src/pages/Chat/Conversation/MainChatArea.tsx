@@ -11,11 +11,11 @@ interface MainChatAreaProps {
 }
 
 const MainChatArea = ({
-    activeConversation,
-    messages,
-    message,
-    onMessageChange,
-    onSendMessage
+  activeConversation,
+  messages,
+  message,
+  onMessageChange,
+  onSendMessage,
 }: MainChatAreaProps) => {
   return (
     <div className="flex-1 flex flex-col">

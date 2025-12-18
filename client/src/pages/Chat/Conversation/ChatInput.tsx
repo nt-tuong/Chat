@@ -7,12 +7,12 @@ interface ChatInputProps {
 }
 
 const ChatInput = ({
-    message,
-    onMessageChange,
-    onSendMessage
+  message,
+  onMessageChange,
+  onSendMessage,
 }: ChatInputProps) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       onSendMessage();
     }

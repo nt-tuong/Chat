@@ -1,5 +1,5 @@
-import { redirect } from 'react-router-dom';
-import { store } from '../store';
+import { Params, redirect } from "react-router-dom";
+import { store } from "../store";
 
 /**
  * Loader function to protect routes that require authentication
@@ -10,7 +10,7 @@ export const requireAuth = () => {
   const isAuthenticated = state.auth.isAuthenticated;
 
   if (!isAuthenticated) {
-    return redirect('/login');
+    return redirect("/login");
   }
 
   return null;
@@ -25,7 +25,7 @@ export const requireGuest = () => {
   const isAuthenticated = state.auth.isAuthenticated;
 
   if (isAuthenticated) {
-    return redirect('/');
+    return redirect("/");
   }
 
   return null;
@@ -35,15 +35,14 @@ export const requireGuest = () => {
  * Loader function for login page
  * Redirects to home if already authenticated
  */
-export const requireGuestPromise = () => {
+export const testPromise = () => {
   const state = store.getState();
   console.log("requireGuestPromise!!");
-  
+
   return new Promise((resolve) => {
     setTimeout(() => {
       console.log("resolve!!");
       return resolve(null);
-      
     }, 5000);
   });
 };
@@ -52,19 +51,22 @@ export const requireGuestPromise = () => {
  * Loader function to protect routes that require authentication
  * Returns null if authenticated, redirects to /login if not
  */
-export const authMiddleware  = async () => {
+export const authMiddleware = async () => {
   const state = store.getState();
   const isAuthenticated = state.auth.isAuthenticated;
+  console.log("authMiddleware!");
 
-  if (!isAuthenticated) {
-    throw redirect("/login");
-  }
-
+  // if (!isAuthenticated) {
+  //   throw redirect("/login");
+  // }
 };
 
-export const loggingMiddleware = async ({ request }: { request: Request }, next: () => Promise<unknown>) => {
+export const loggingMiddleware = async (
+  { request, params }: { request: Request; params: Params },
+  next: () => Promise<unknown>
+) => {
   let url = new URL(request.url);
-  console.log(`Starting navigation: ${url.pathname}${url.search}`);
+  console.log(`Starting navigation: ${url.pathname}${url.search} ${params}`);
   const start = performance.now();
   await next();
   const duration = performance.now() - start;
