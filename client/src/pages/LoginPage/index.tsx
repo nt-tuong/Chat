@@ -16,6 +16,7 @@ import { TermsText } from "./components/TermsText";
 import { Footer } from "./components/Footer";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import { useRevalidator } from "react-router-dom";
+import { router } from "../../Router";
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
@@ -92,28 +93,30 @@ const LoginPage = () => {
       // For now, simulate API call
       console.log("Login submitted:", data);
 
-      revalidator.revalidate();
+      if (router.state.location.pathname !== "/login") {
+        revalidator.revalidate();
+      }
 
-      // // Simulate API response
-      // const mockToken = `mock_token_${Date.now()}`;
-      // const mockUser = {
-      //   email: data.email,
-      //   name: data.email.split("@")[0], // Extract name from email
-      // };
+      // Simulate API response
+      const mockToken = `mock_token_${Date.now()}`;
+      const mockUser = {
+        email: data.email,
+        name: data.email.split("@")[0], // Extract name from email
+      };
 
-      // // Dispatch login action
-      // dispatch(
-      //   login({
-      //     token: mockToken,
-      //     user: mockUser,
-      //   })
-      // );
+      // Dispatch login action
+      dispatch(
+        login({
+          token: mockToken,
+          user: mockUser,
+        })
+      );
 
-      // // Show success message
-      // alert(t("loginMessages.loginSuccess"));
+      // Show success message
+      alert(t("loginMessages.loginSuccess"));
 
-      // // Navigate to home page
-      // navigate("/", { replace: true });
+      // Navigate to home page
+      navigate("/", { replace: true });
     } catch (error) {
       console.error("Login error:", error);
       alert("Login failed. Please try again.");
