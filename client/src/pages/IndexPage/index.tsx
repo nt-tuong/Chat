@@ -36,7 +36,7 @@ const IndexPage: React.FC = () => {
             Test Christmas Tree
           </button>
           <button onClick={() => navigate("/redis")} className="nav-link">
-            Test Redis
+            Test Redis Persistent Local Storage
           </button>
         </div>
       </div>

@@ -41,10 +41,45 @@ services:
     networks:
       - chat_database
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis_cache
+    restart: always
+    command: redis-server --requirepass redis123 --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - chat_database
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis_commander
+    restart: always
+    ports:
+      - "5055:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379:0:redis123
+      - TZ=Asia/Ho_Chi_Minh
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - chat_database
+
 volumes:
   postgres_data:
   pgadmin_data:
+  redis_data:
 
 networks:
   chat_database:
-    external: true
+    name: chat_database
