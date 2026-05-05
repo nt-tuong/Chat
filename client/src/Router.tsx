@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <ProtectedLayout />,
-    loader: requireAuth, // Redirect to login if not authenticated
+    middleware: [authMiddleware],
     children: [
       {
         index: true,
