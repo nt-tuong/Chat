@@ -25,6 +25,7 @@ export const requireGuest = () => {
   const isAuthenticated = state.auth.isAuthenticated;
 
   if (isAuthenticated) {
+    console.log("requireGuest!!");
     return redirect("/");
   }
 
@@ -63,7 +64,7 @@ export const authMiddleware = async () => {
 
 export const loggingMiddleware = async (
   { request, params }: { request: Request; params: Params },
-  next: () => Promise<unknown>
+  next: () => Promise<unknown>,
 ) => {
   let url = new URL(request.url);
   console.log(`Starting navigation: ${url.pathname}${url.search} ${params}`);
