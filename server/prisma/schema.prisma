@@ -109,6 +109,7 @@ model M_Organizations {
   updatedBy   BigInt?
 
   users       M_Users[] @relation("UserOrganization")
+  nos         T_No[] @relation("NoOrganization")
 
   createdByUser M_Users? @relation("OrganizationCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
   updatedByUser M_Users? @relation("OrganizationUpdatedBy", fields: [updatedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -135,4 +136,38 @@ model M_Roles {
   updatedByUser M_Users? @relation("RoleUpdatedBy", fields: [updatedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("M_Roles")
+}
+
+model M_Messages {
+  id          BigInt   @id @default(autoincrement())
+
+  code        String   @db.VarChar(10) @unique
+  message     String   @db.Text
+
+  @@map("M_Messages")
+}
+
+model T_No{
+  id              BigInt    @id @default(autoincrement())
+
+  no              String    @db.VarChar(20) @unique
+  nextNo          BigInt    @default(0)
+  year            Int
+  month           Int
+
+  organizationId  BigInt
+
+  organization   M_Organizations @relation("NoOrganization", fields: [organizationId], references: [id])
+
+  @@map("T_No")
+}
+
+model T_RefreshTokens {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("T_RefreshTokens")
 }

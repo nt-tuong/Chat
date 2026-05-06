@@ -18,6 +18,9 @@ DROP TABLE IF EXISTS "M_Users" CASCADE;
 DROP TABLE IF EXISTS "M_Persons" CASCADE;
 DROP TABLE IF EXISTS "M_Organizations" CASCADE;
 DROP TABLE IF EXISTS "M_Roles" CASCADE;
+DROP TABLE IF EXISTS "M_Messages " CASCADE;
+DROP TABLE IF EXISTS "T_No" CASCADE;
+DROP TABLE IF EXISTS "T_RefreshTokens" CASCADE;
 
 -- =========================================================
 -- Table: M_Roles
@@ -115,6 +118,38 @@ CREATE TABLE "M_Users" (
 );
 
 -- =========================================================
+-- Table: M_Messages
+-- =========================================================
+CREATE TABLE "M_Messages" (
+    "id"              BIGSERIAL PRIMARY KEY,
+    "code"            VARCHAR(10) NOT NULL UNIQUE,
+    "message"         TEXT NOT NULL
+);
+
+-- =========================================================
+-- Table: T_No
+-- =========================================================
+CREATE TABLE "T_No" (
+    "id"                BIGSERIAL PRIMARY KEY,
+    "no"                VARCHAR(20),
+    "nextNo"            BIGINT NOT NULL DEFAULT 0,
+    "year"              INTEGER NOT NULL,
+    "month"             INTEGER NOT NULL,
+    "organizationId"    BIGINT NOT NULL
+);
+
+-- =========================================================
+-- Table: T_RefreshTokens
+-- =========================================================
+CREATE TABLE "T_RefreshTokens" (
+    "id"                VARCHAR(255),
+    "token"             VARCHAR(255) NOT NULL UNIQUE,
+    "userId"            BIGINT NOT NULL,
+    "expiresAt"         TIMESTAMPTZ NOT NULL,
+    "createdAt"         TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- =========================================================
 -- Foreign Keys
 -- =========================================================
 
@@ -151,6 +186,11 @@ ALTER TABLE "M_Roles"
         FOREIGN KEY ("createdBy") REFERENCES "M_Users" ("id"),
     ADD CONSTRAINT "FK_M_Roles_UpdatedBy"
         FOREIGN KEY ("updatedBy") REFERENCES "M_Users" ("id");
+
+-- T_No
+ALTER TABLE "T_No"
+    ADD CONSTRAINT "FK_T_No_Organization"
+        FOREIGN KEY ("organizationId") REFERENCES "M_Organizations" ("id");
 
 -- =========================================================
 -- Indexes
