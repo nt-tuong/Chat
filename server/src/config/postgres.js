@@ -1,22 +1,21 @@
-const { Pool } = require('pg');
+const { Pool } = require("pg");
 
 // Create PostgreSQL connection pool
 const pool = new Pool({
-  host: process.env.POSTGRES_HOST || 'localhost',
-  port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
-  database: process.env.POSTGRES_DB || 'chat_db',
-  user: process.env.POSTGRES_USER || 'postgres',
-  password: process.env.POSTGRES_PASSWORD || 'postgres',
+  host: process.env.POSTGRES_HOST || "localhost",
+  port: parseInt(process.env.POSTGRES_PORT || "5432", 10),
+  database: process.env.POSTGRES_DB || "chat_db",
+  user: process.env.POSTGRES_USER || "postgres",
+  password: process.env.POSTGRES_PASSWORD || "postgres",
   // Connection pool settings
   max: 20, // Maximum number of clients in the pool
   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
   connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection could not be established
 });
 
-
 // Handle pool errors
-pool.on('error', (err, client) => {
-  console.error('Unexpected error on idle PostgreSQL client', err);
+pool.on("error", (err, client) => {
+  console.error("Unexpected error on idle PostgreSQL client", err);
   process.exit(-1);
 });
 
@@ -24,16 +23,21 @@ pool.on('error', (err, client) => {
 const connectPostgres = async () => {
   try {
     const client = await pool.connect();
-    console.log('PostgreSQL Connected successfully');
-    
+    console.log("PostgreSQL Connected successfully");
+
     // Test query
-    const result = await client.query('SELECT NOW()');
-    console.log('PostgreSQL connection test:', result.rows[0].now);
-    
+    const result = await client.query("SELECT NOW()");
+    console.log("PostgreSQL connection test:", result.rows[0].now);
+
+    const resultDb = await client.query(
+      "SELECT current_database(), current_schema()",
+    );
+    console.log("Current DB:", resultDb.rows[0]);
+
     client.release();
     return true;
   } catch (error) {
-    console.error('Error connecting to PostgreSQL:', error.message);
+    console.error("Error connecting to PostgreSQL:", error.message);
     throw error;
   }
 };
@@ -42,9 +46,12 @@ const connectPostgres = async () => {
 if (process.env.POSTGRES_URI) {
   const poolFromURI = new Pool({
     connectionString: process.env.POSTGRES_URI,
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+    ssl:
+      process.env.NODE_ENV === "production"
+        ? { rejectUnauthorized: false }
+        : false,
   });
-  
+
   // Replace the pool if URI is provided
   Object.assign(pool, poolFromURI);
 }
@@ -54,4 +61,3 @@ module.exports = {
   connectPostgres,
   query: (text, params) => pool.query(text, params),
 };
-

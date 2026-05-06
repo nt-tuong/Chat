@@ -64,10 +64,10 @@ const LoginPage = () => {
 
     // Save values only if they exist
     const hasLoginValues = Object.values(currentLoginValues).some(
-      (v) => v !== ""
+      (v) => v !== "",
     );
     const hasRegisterValues = Object.values(currentRegisterValues).some(
-      (v) => v !== ""
+      (v) => v !== "",
     );
 
     if (hasLoginValues) {
@@ -109,7 +109,7 @@ const LoginPage = () => {
         login({
           token: mockToken,
           user: mockUser,
-        })
+        }),
       );
 
       // Show success message
@@ -141,7 +141,7 @@ const LoginPage = () => {
         login({
           token: mockToken,
           user: mockUser,
-        })
+        }),
       );
 
       // Show success message
