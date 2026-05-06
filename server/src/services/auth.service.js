@@ -36,8 +36,6 @@ async function loginWithUsernamePassword(username, password) {
     },
   });
 
-  console.log("user", user);
-
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
     return null;
