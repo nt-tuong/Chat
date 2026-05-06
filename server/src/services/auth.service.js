@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { query } = require("../config/postgres");
+const prisma = require("../config/prisma");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "7d";
@@ -14,37 +14,41 @@ async function loginWithUsernamePassword(username, password) {
     throw new Error("JWT_SECRET is not configured");
   }
 
-  const sql = `
-    SELECT
-      u."id",
-      u."uuid"::text AS "uuid",
-      u."password",
-      u."userName",
-      p."fullName"
-    FROM "M_Users" u
-    INNER JOIN "M_Persons" p ON p."id" = u."personId"
-    WHERE LOWER(TRIM(u."userName")) = LOWER(TRIM($1))
-      AND u."status" = 1
-    LIMIT 1
-  `;
+  const inputUserName = username.trim().toLowerCase();
+  const user = await prisma.m_Users.findFirst({
+    where: {
+      userName: {
+        equals: inputUserName,
+        mode: "insensitive",
+      },
+      status: 1,
+    },
+    select: {
+      id: true,
+      uuid: true,
+      password: true,
+      userName: true,
+      person: {
+        select: {
+          fullName: true,
+        },
+      },
+    },
+  });
 
-  const { rows } = await query(sql, [username]);
-  if (rows.length === 0) {
-    return null;
-  }
+  console.log("user", user);
 
-  const row = rows[0];
-
-  const match = await bcrypt.compare(password, row.password);
+  const match = await bcrypt.compare(password, user.password);
   if (!match) {
     return null;
   }
 
   const token = jwt.sign(
     {
-      sub: String(row.id),
-      uuid: row.uuid,
-      username: row.userName,
+      sub: String(user.id),
+      uuid: user.uuid,
+      username: user.userName,
+      fullName: user.person.fullName,
     },
     JWT_SECRET,
     { expiresIn: JWT_EXPIRES_IN },
