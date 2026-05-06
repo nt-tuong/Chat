@@ -35,7 +35,6 @@ async function loginWithUsernamePassword(username, password) {
 
   const row = rows[0];
 
-  // bcrypt compare password
   const match = await bcrypt.compare(password, row.password);
   if (!match) {
     return null;
@@ -45,7 +44,7 @@ async function loginWithUsernamePassword(username, password) {
     {
       sub: String(row.id),
       uuid: row.uuid,
-      username: row.username,
+      username: row.userName,
     },
     JWT_SECRET,
     { expiresIn: JWT_EXPIRES_IN },

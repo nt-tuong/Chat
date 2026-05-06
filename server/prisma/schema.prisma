@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model M_Users {
+  id             BigInt   @id @default(autoincrement())
+  uuid           String   @db.Uuid @default(dbgenerated("gen_random_uuid()")) @unique
+
+  code           String   @db.VarChar(50) @unique
+
+  organizationId BigInt
+  roleId         BigInt
+  personId       BigInt
+
+  userName       String   @db.VarChar(255) @unique
+  password       String   @db.VarChar(255)
+
+  status         Int      @default(1) @db.SmallInt
+
+  createAt       DateTime @default(now()) @db.Timestamptz(6)
+  createdBy      BigInt?
+  updatedAt      DateTime @updatedAt @db.Timestamptz(6)
+  updatedBy      BigInt?
+
+  organization   M_Organizations @relation("UserOrganization", fields: [organizationId], references: [id])
+  role           M_Roles         @relation("UserRole", fields: [roleId], references: [id])
+  person         M_Persons       @relation("UserPerson", fields: [personId], references: [id])
+
+  createdByUser  M_Users? @relation("UserCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  updatedByUser  M_Users? @relation("UserUpdatedBy", fields: [updatedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdUsers   M_Users[] @relation("UserCreatedBy")
+  updatedUsers   M_Users[] @relation("UserUpdatedBy")
+
+  createdRoles          M_Roles[]         @relation("RoleCreatedBy")
+  updatedRoles          M_Roles[]         @relation("RoleUpdatedBy")
+  createdOrganizations  M_Organizations[] @relation("OrganizationCreatedBy")
+  updatedOrganizations  M_Organizations[] @relation("OrganizationUpdatedBy")
+  createdPersons        M_Persons[]       @relation("PersonCreatedBy")
+  updatedPersons        M_Persons[]       @relation("PersonUpdatedBy")
+
+  @@index([organizationId], map: "IDX_M_Users_OrganizationId")
+  @@index([roleId], map: "IDX_M_Users_RoleId")
+  @@index([personId], map: "IDX_M_Users_PersonId")
+  @@index([status], map: "IDX_M_Users_Status")
+  @@map("M_Users")
+}
+
+model M_Persons {
+  id                   BigInt   @id @default(autoincrement())
+  uuid                 String   @db.Uuid @default(dbgenerated("gen_random_uuid()")) @unique
+
+  name                 String   @db.VarChar(255)
+  fullName             String   @db.VarChar(255)
+
+  birthDate            Int
+  gender               Int      @default(0) @db.SmallInt
+
+  citizenIdentityCard  String   @db.VarChar(12)
+  phoneNumber          String   @db.VarChar(20)
+  email                String   @db.VarChar(255)
+
+  address              String   @db.VarChar(255)
+  city                 String?  @db.VarChar(255)
+  state                String?  @db.VarChar(255)
+  country              String?  @db.VarChar(255)
+  postalCode           String?  @db.VarChar(20)
+
+  createAt             DateTime @default(now()) @db.Timestamptz(6)
+  createdBy            BigInt?
+  updatedAt            DateTime @updatedAt @db.Timestamptz(6)
+  updatedBy            BigInt?
+
+  users                M_Users[] @relation("UserPerson")
+
+  createdByUser        M_Users? @relation("PersonCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  updatedByUser        M_Users? @relation("PersonUpdatedBy", fields: [updatedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([birthDate], map: "IDX_M_Persons_BirthDate")
+  @@index([email], map: "IDX_M_Persons_Email")
+  @@index([phoneNumber], map: "IDX_M_Persons_PhoneNumber")
+  @@index([citizenIdentityCard], map: "IDX_M_Persons_CitizenId")
+  @@map("M_Persons")
+}
+
+model M_Organizations {
+  id          BigInt   @id @default(autoincrement())
+  uuid        String   @db.Uuid @default(dbgenerated("gen_random_uuid()")) @unique
+
+  code        String   @db.VarChar(50) @unique
+  name        String   @db.VarChar(255)
+  description String?  @db.VarChar(255)
+
+  status      Int      @default(1) @db.SmallInt
+
+  createAt    DateTime @default(now()) @db.Timestamptz(6)
+  createdBy   BigInt?
+  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
+  updatedBy   BigInt?
+
+  users       M_Users[] @relation("UserOrganization")
+
+  createdByUser M_Users? @relation("OrganizationCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  updatedByUser M_Users? @relation("OrganizationUpdatedBy", fields: [updatedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([status], map: "IDX_M_Organizations_Status")
+  @@map("M_Organizations")
+}
+
+model M_Roles {
+  id          BigInt   @id @default(autoincrement())
+
+  code        String   @db.VarChar(50) @unique
+  name        String   @db.VarChar(255)
+  description String?  @db.VarChar(1000)
+
+  createAt    DateTime @default(now()) @db.Timestamptz(6)
+  createdBy   BigInt?
+  updatedAt   DateTime @updatedAt @db.Timestamptz(6)
+  updatedBy   BigInt?
+
+  users       M_Users[] @relation("UserRole")
+
+  createdByUser M_Users? @relation("RoleCreatedBy", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  updatedByUser M_Users? @relation("RoleUpdatedBy", fields: [updatedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("M_Roles")
+}
