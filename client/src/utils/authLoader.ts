@@ -55,6 +55,7 @@ export const testPromise = () => {
 export const authMiddleware = async () => {
   const state = store.getState();
   const isAuthenticated = state.auth.isAuthenticated;
+  console.log("asdadasd");
 
   if (!isAuthenticated) {
     throw redirect("/login");
