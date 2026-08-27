@@ -15,6 +15,7 @@ import LoginPage from "./pages/LoginPage";
 import ChristmasTree from "./pages/ChristmasTree";
 import RedisUI from "./pages/Redis";
 import ProtectedLayout from "./pages/ProtectedLayout";
+import ReRenderComponent from "./pages/ReRenderComponent";
 
 export const router = createBrowserRouter([
   // Guest routes
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path: "/redis",
         element: <RedisUI />,
+      },
+      {
+        path: "/re-render-component",
+        element: <ReRenderComponent />,
       },
     ],
   },

@@ -38,6 +38,12 @@ const IndexPage: React.FC = () => {
           <button onClick={() => navigate("/redis")} className="nav-link">
             Test Redis Persistent Local Storage
           </button>
+          <button
+            onClick={() => navigate("/re-render-component")}
+            className="nav-link"
+          >
+            Test Re-render Component
+          </button>
         </div>
       </div>
     </div>
