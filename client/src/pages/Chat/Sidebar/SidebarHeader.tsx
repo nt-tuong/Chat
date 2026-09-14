@@ -9,21 +9,29 @@ const SidebarHeader = ({ onSearchChange }: SidebarHeaderProps) => {
   const navigate = useNavigate();
   const handleClickIcon = () => {
     navigate("/");
-  }
+  };
 
   const handleClickMenu = () => {
     console.log("onClickMenu");
-  }
+  };
 
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearchChange?.(e);
-  }
+  };
 
   return (
     <div className="p-4 border-b border-gray-200">
       <div className="flex items-center justify-between mb-3">
-        <h1 className="text-xl font-bold text-blue-600 cursor-pointer" onClick={handleClickIcon}>Chat With Me</h1>
-        <button className="p-2 hover:bg-gray-100 rounded-full" onClick={handleClickMenu}>
+        <h1
+          className="text-xl font-bold text-blue-600 cursor-pointer"
+          onClick={handleClickIcon}
+        >
+          Chat With Me
+        </h1>
+        <button
+          className="p-2 hover:bg-gray-100 rounded-full"
+          onClick={handleClickMenu}
+        >
           <Menu size={20} className="text-gray-600" />
         </button>
       </div>

@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { I18nextProvider } from 'react-i18next';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import i18n from './i18';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { I18nextProvider } from "react-i18next";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import i18n from "./i18";
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 
 if (!rootElement) {
-  throw new Error('Failed to find the root element');
+  throw new Error("Failed to find the root element");
 }
 
 const root = ReactDOM.createRoot(rootElement);
@@ -22,7 +22,7 @@ root.render(
         <App />
       </I18nextProvider>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

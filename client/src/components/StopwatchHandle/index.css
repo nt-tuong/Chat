@@ -1,0 +1,133 @@
+/* index.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f1f5f9;
+}
+
+/* Container chính */
+.stopwatch-container {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 24px;
+  padding: 40px 48px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stopwatch-container:hover {
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Đồng hồ */
+.stopwatch-time {
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", "Roboto Mono", monospace;
+  font-size: 3.8rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #f8fafc;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+  margin-bottom: 36px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* Nút điều khiển */
+.controls {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  min-width: 110px;
+}
+
+/* Hiệu ứng nhấn */
+.btn:active {
+  transform: scale(0.96);
+}
+
+/* Nút Start */
+.btn-start {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.35);
+}
+
+.btn-start:hover {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Nút Pause */
+.btn-pause {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+}
+
+.btn-pause:hover {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Nút Stop */
+.btn-stop {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);
+}
+
+.btn-stop:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .stopwatch-container {
+    padding: 32px 24px;
+    margin: 16px;
+  }
+
+  .stopwatch-time {
+    font-size: 2.6rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

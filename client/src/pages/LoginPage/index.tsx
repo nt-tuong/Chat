@@ -185,9 +185,9 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isLogin) {
-      document.title = `${t("login")} | Chat With Me`;
+      document.title = `${t("login")}`;
     } else {
-      document.title = `${t("loginMessages.signupNow")} | Chat With Me`;
+      document.title = `${t("loginMessages.signupNow")}`;
     }
   }, [isLogin, t]);
 
