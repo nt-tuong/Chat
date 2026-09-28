@@ -20,6 +20,12 @@ const IndexPage: React.FC = () => {
     stopwatchRef.current?.start();
   };
 
+  const fetchData = async () => {
+    const response = await fetch("http://localhost:8004/favicon.ico");
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
     <div className="index-page">
       <div className="index-container">
@@ -33,7 +39,7 @@ const IndexPage: React.FC = () => {
             onClick={() => navigate('/test-image')} 
             className="nav-link"
           >
-            Test Image Slider (Old Version)
+            Test Image Slider (Old Version)sid
           </button> */}
           <button onClick={() => navigate("/chat")} className="nav-link">
             Test Chat
@@ -59,6 +65,9 @@ const IndexPage: React.FC = () => {
           </button>
           <button onClick={openMiniWindow} className="nav-link">
             Open Home in Mini Window
+          </button>
+          <button onClick={fetchData} className="nav-link">
+            Test Fetch Data
           </button>
         </div>
       </div>
