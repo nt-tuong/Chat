@@ -22,20 +22,20 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
-    loader: requireGuest, // Redirect to home if already logged in
+    // loader: requireGuest, // Redirect to home if already logged in
   },
   {
     path: "/login-promise",
     element: <LoginPage />,
-    middleware: [authMiddleware],
-    loader: testPromise,
+    // middleware: [authMiddleware],
+    // loader: testPromise,
   },
 
   // Protected routes
   {
     path: "/",
     element: <ProtectedLayout />,
-    middleware: [authMiddleware],
+    // middleware: [authMiddleware],
     children: [
       {
         index: true,
@@ -68,10 +68,10 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // fallback
-  {
-    path: "*",
-    element: <Navigate to="/" replace />,
-    loader: requireAuth,
-  },
+  // // fallback
+  // {
+  //   path: "*",
+  //   element: <Navigate to="/" replace />,
+  //   loader: requireAuth,
+  // },
 ]);

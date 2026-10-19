@@ -17,7 +17,7 @@ const IndexPage: React.FC = () => {
       "miniWindow",
       "width=600,height=400,resizable=yes,scrollbars=yes",
     );
-    stopwatchRef.current?.start();
+    // stopwatchRef.current?.start();
   };
 
   const fetchData = async () => {
@@ -31,8 +31,57 @@ const IndexPage: React.FC = () => {
       <div className="index-container">
         <h1>Welcome to Image Slider App</h1>
         <p>Chào mừng bạn đến với ứng dụng Image Slider</p>
-
         <Stopwatch ref={stopwatchRef} />
+
+        <div
+          style={{
+            overflow: "auto",
+            width: "600px",
+            height: "100px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+        >
+          <div
+            style={{
+              width: "max-content",
+              minWidth: "100%",
+              height: "max-content",
+              flexShrink: 0,
+            }}
+          >
+            <span>Employment Income Adjustment Deduction Declaration Form</span>
+            <br />
+
+            <img
+              alt=""
+              src="./basic_spouse_hr_payroll_system_files/spacer.gif"
+              style={{ width: "8px" }}
+            />
+
+            <span>
+              If you are eligible for the Employment Income Adjustment
+              Deduction, the "Income Amount" under Salary Income on the Basic
+              Deduction Declaration Form must be recalculated.
+            </span>
+
+            <br />
+
+            <img
+              alt=""
+              src="./basic_spouse_hr_payroll_system_files/spacer.gif"
+              style={{ width: "8px" }}
+            />
+
+            <span>
+              Please click the "Recalculate" button after entering the
+              information. However, if you do not want to change the "Income
+              Amount" that you entered manually, please do not click the
+              "Recalculate" button.
+            </span>
+          </div>
+        </div>
 
         <div className="navigation-links">
           {/* <button 

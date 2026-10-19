@@ -41,9 +41,13 @@ const RedisShoppingCart = ({ products }: RedisShoppingCartProps) => {
     setCart(cartData);
     addLog(
       `Redis getAll cart:${userId}`,
-      "Load giỏ hàng từ Redis (persistent storage)"
+      "Load giỏ hàng từ Redis (persistent storage)",
     );
     setLoading(false);
+  };
+
+  const closeWindow = () => {
+    window.close();
   };
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const RedisShoppingCart = ({ products }: RedisShoppingCartProps) => {
     await RedisSimulator.set(cartKey, product.id, currentQty + 1);
     addLog(
       `Redis set cart:${userId} ${product.id} ${currentQty + 1}`,
-      `Thêm ${product.name} vào giỏ`
+      `Thêm ${product.name} vào giỏ`,
     );
     await loadCart();
   };
@@ -70,12 +74,12 @@ const RedisShoppingCart = ({ products }: RedisShoppingCartProps) => {
       await RedisSimulator.delete(cartKey, productId);
       addLog(
         `Redis delete cart:${userId} ${productId}`,
-        "Xóa sản phẩm khỏi giỏ"
+        "Xóa sản phẩm khỏi giỏ",
       );
     } else {
       addLog(
         `Redis incrementBy cart:${userId} ${productId} ${change}`,
-        `Cập nhật số lượng: ${change > 0 ? "+" : ""}${change}`
+        `Cập nhật số lượng: ${change > 0 ? "+" : ""}${change}`,
       );
     }
     await loadCart();
@@ -105,7 +109,7 @@ const RedisShoppingCart = ({ products }: RedisShoppingCartProps) => {
   const getTotalPrice = () => {
     return getCartItems().reduce(
       (sum, item) => sum + item.price * item.quantity,
-      0
+      0,
     );
   };
 
@@ -140,6 +144,14 @@ const RedisShoppingCart = ({ products }: RedisShoppingCartProps) => {
             >
               <RefreshCw size={18} />
               Reload
+            </button>
+
+            <button
+              onClick={closeWindow}
+              className="flex items-center gap-2 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg hover:bg-indigo-200 transition"
+            >
+              <RefreshCw size={18} />
+              Close page
             </button>
           </div>
           <p className="text-gray-600 mt-3">
