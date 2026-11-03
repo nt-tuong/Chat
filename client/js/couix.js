@@ -78024,7 +78024,7 @@ window.s7_data = {
 									"guide_details": {
 										"id": 41205,
 										"guide_id": 41211,
-										"guide_contents": "<p><span><span>作成したcsvファイル</span>を検索ツールを使用せず一覧から直接探す場合はこのまま<span>【次へ】</span>をクリックしてください。</span></p><p><br></p><p>検索ツールを使って絞り込む場合は、検索に必要な項目を入力して「<strong>検索する」</strong>をクリックしてください。</p><p><br></p><p><span>検索が終わりましたら吹き出しの中の<span>【次へ】</span>クリックしてください。 </span></p>",
+										"guide_contents": "<p><span><span>作成したcsvファイル</span>を検索ツールを使用せず一覧から直接探す場合はこのまま<span>【次へ】</span>をクリックしてください。</span></p><p><br></p><p>検索ツールを使って絞り込む場合は、検索に必要な項目を入力して「<strong>検索する」</strong>をクリックしてください。</p><p><br></p><p><span>検索が終わりましたら吹き出しの中の<span>【次へ】</span>クリックしてください。</span></p>",
 										"x_coordinate": 0,
 										"guide_play_order": 3,
 										"speech_balloon_width": 11,
@@ -84182,7 +84182,7 @@ window.s7_data = {
 									"guide_details": {
 										"id": 41258,
 										"guide_id": 41264,
-										"guide_contents": "<p>パスワードをリセットするユーザー<span>を検索ツールを使用せず一覧から直接探す場合はこのまま【検索完了】をクリックしてください。</span><br><span>検索ツールを使って絞り込む場合は、検索に必要な項目を入力して「検索する」をクリックしてください。</span><br><span>検索が終わりましたら吹き出しの中の【検索完了】をクリックしてください。 </span><br></p>",
+										"guide_contents": "<p>パスワードをリセットするユーザー<span>を検索ツールを使用せず一覧から直接探す場合はこのまま【検索完了】をクリックしてください。</span><br><span>検索ツールを使って絞り込む場合は、検索に必要な項目を入力して「検索する」をクリックしてください。</span><br><span>検索が終わりましたら吹き出しの中の【検索完了】をクリックしてください。</span><br></p>",
 										"x_coordinate": 0,
 										"guide_play_order": 3,
 										"speech_balloon_width": 14,

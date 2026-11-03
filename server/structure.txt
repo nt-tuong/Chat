@@ -1,0 +1,25 @@
+server/
+├── index.js                     khởi tạo + socket events (login, send_message, react, typing)
+├── data/                        (tự sinh) db/*.json + uploads/
+└── src/
+    ├── config.js                cổng, driver DB/file, cờ tính năng, giới hạn
+    ├── models/entities.js       hình dạng các entity (hợp đồng cho mọi DB driver)
+    ├── repositories/            ← CHỖ DUY NHẤT phụ thuộc vào loại database
+    │   ├── index.js             chọn driver theo DB_DRIVER
+    │   └── local/               driver hiện tại: file JSON
+    ├── storage/                 lưu file ảnh (local; sau này S3)
+    ├── services/                nghiệp vụ (không biết DB là gì)
+    ├── routes/                  REST API /api/...
+    ├── middleware/  auth/       xác thực token, xử lý lỗi
+    ├── seed/                    emojiData.js, systemStickers.js
+    └── utils/
+
+client/src/
+├── App.jsx  App.css  socket.js
+├── config/features.js           cờ tính năng phía client
+├── api/                         http.js (token, URL), chatApi.js
+├── utils/text.js                chuẩn hóa chữ để tìm không dấu
+└── components/EmojiStickerPicker/
+    ├── index.jsx                popup + tab + tìm kiếm
+    ├── EmojiTab.jsx             ← đang dùng
+    └── StickerTab / GifTab / PacksTab.jsx   ← đang tắt

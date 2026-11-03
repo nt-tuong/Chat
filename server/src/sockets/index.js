@@ -19,10 +19,6 @@ const initSocket = (server) => {
     });
   });
 
-  io.on("connection", (socket) => {
-    console.log("User connected:", socket.id);
-  });
-
   io.on("disconnect", (socket) => {
     console.log("User disconnected:", socket.id);
   });
@@ -30,7 +26,6 @@ const initSocket = (server) => {
   io.on("message", (socket, message) => {
     console.log("Message received:", message);
   });
-
 };
 
 const getIO = () => {

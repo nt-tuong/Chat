@@ -1,4 +1,9 @@
+import React, { useState } from "react";
 import { Image, Paperclip, Send, Smile } from "lucide-react";
+
+// Components
+import EmojiPicker from "../../../components/Emoji/EmojiPicker";
+import type { Emoji } from "../../../components/Emoji/emoji.types";
 
 interface ChatInputProps {
   message: string;
@@ -11,6 +16,13 @@ const ChatInput = ({
   onMessageChange,
   onSendMessage,
 }: ChatInputProps) => {
+  const [showEmoji, setShowEmoji] = useState(false);
+
+  const handleEmojiSelect = (emoji: Emoji) => {
+    // setMessage((previous) => previous + emoji.native);
+    setShowEmoji(false);
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -19,35 +31,54 @@ const ChatInput = ({
   };
 
   return (
-    <div className="bg-white border-t border-gray-200 p-4">
-      <div className="flex items-center space-x-2">
-        <button className="p-2 hover:bg-gray-100 rounded-full text-gray-600">
-          <Image size={20} />
-        </button>
-        <button className="p-2 hover:bg-gray-100 rounded-full text-gray-600">
-          <Paperclip size={20} />
-        </button>
-        <div className="flex-1 flex items-center bg-gray-100 rounded-full px-4 py-2">
-          <input
-            type="text"
-            placeholder="Nhập tin nhắn..."
-            value={message}
-            onChange={(e) => onMessageChange(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="flex-1 bg-transparent outline-none text-sm"
+    <>
+      {showEmoji && (
+        <div className="emoji-popover">
+          <EmojiPicker
+            onSelect={handleEmojiSelect}
+            onClose={() => setShowEmoji(false)}
+            style={{
+              position: "absolute",
+              bottom: 80,
+              zIndex: 1000,
+            }}
           />
-          <button className="p-1 hover:bg-gray-200 rounded-full text-gray-600">
-            <Smile size={20} />
+        </div>
+      )}
+      <div className="bg-white border-t border-gray-200 p-4">
+        <div className="flex items-center space-x-2">
+          <button className="p-2 hover:bg-gray-100 rounded-full text-gray-600">
+            <Image size={20} />
+          </button>
+          <button className="p-2 hover:bg-gray-100 rounded-full text-gray-600">
+            <Paperclip size={20} />
+          </button>
+          <div className="flex-1 flex items-center bg-gray-100 rounded-full px-4 py-2">
+            <input
+              type="text"
+              placeholder="Nhập tin nhắn..."
+              value={message}
+              onChange={(e) => onMessageChange(e.target.value)}
+              onKeyPress={handleKeyPress}
+              className="flex-1 bg-transparent outline-none text-sm"
+            />
+            <button
+              className="p-1 hover:bg-gray-200 rounded-full text-gray-600"
+              onClick={() => setShowEmoji((value) => !value)}
+              aria-label="Open emoji picker"
+            >
+              <Smile size={20} />
+            </button>
+          </div>
+          <button
+            onClick={onSendMessage}
+            className="p-2 bg-blue-500 hover:bg-blue-600 rounded-full text-white"
+          >
+            <Send size={20} />
           </button>
         </div>
-        <button
-          onClick={onSendMessage}
-          className="p-2 bg-blue-500 hover:bg-blue-600 rounded-full text-white"
-        >
-          <Send size={20} />
-        </button>
       </div>
-    </div>
+    </>
   );
 };
 
